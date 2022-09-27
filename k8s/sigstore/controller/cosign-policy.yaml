@@ -1,0 +1,13 @@
+apiVersion: policy.sigstore.dev/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  name: spiffe-demo-image-policy
+spec:
+  images:
+  - glob: "**"
+  authorities:
+    # Also works with public OIDC providers!
+    # - keyless:
+    #     identities:
+    #       - issuer: https://accounts.google.com
+    #         subject: <your_name_here>@gmail.com

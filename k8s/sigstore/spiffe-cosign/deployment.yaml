@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spiffe-cosign
+  labels:
+    app: spiffe-cosign
+spec:
+  selector:
+    matchLabels:
+      app: spiffe-cosign
+  template:
+    metadata:
+      labels:
+        app: spiffe-cosign
+    spec:
+      hostPID: true
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: spiffe-cosign
+          image: ghcr.io/dekkagaijin/kubecon-us-22/spiffe-cosign
+          command: ["sleep"]
+          args: ["1000000000"]
+          volumeMounts:
+            - name: spire-agent-socket
+              mountPath: /run/spire/sockets
+              readOnly: true
+            - name: docker-config
+              mountPath: "/root/.docker"
+              readOnly: true
+      volumes:
+        - name: spire-agent-socket
+          hostPath:
+            path: /run/spire/sockets
+            type: Directory
+        # Run k8s/create-docker-json-secret.sh first
+        - name: docker-config
+          secret:
+            secretName: docker-config-json
+            optional: false

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oidc-discovery-provider
+  namespace: spire
+data:
+  oidc-discovery-provider.conf: |
+    log_level = "DEBUG"
+    domain = "oidc-discovery.example.org"
+    allow_insecure_scheme = true
+    insecure_addr="0.0.0.0:8082"
+    server_api {
+      address = "unix:///tmp/spire-server/private/api.sock"
+    }

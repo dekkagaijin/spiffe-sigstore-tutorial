@@ -1,0 +1,1 @@
+Liberally copied from https://github.com/spiffe/spire-tutorials/
